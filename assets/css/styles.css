@@ -1,0 +1,193 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+header {
+    background-color: #222;
+    color: #fff;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1rem;
+    font-weight: bold;
+}
+
+header nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 2rem;
+}
+
+.produits {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux cartes de passer à la ligne */
+    gap: 20px; /* Espacement entre les cartes */
+    justify-content: center; /* Centre les cartes horizontalement */
+}
+
+.produit {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Aligne les éléments haut/bas */
+    align-items: center; /* Centre horizontalement */
+    width: 250px; /* Largeur fixe pour chaque carte */
+    min-height: 400px; /* Hauteur minimale pour chaque carte */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Assure que rien ne déborde */
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.produit img {
+    width: 100%; /* Les images s'adaptent à la largeur */
+    height: 150px; /* Hauteur fixe pour les images */
+    object-fit: cover; /* Garantit un bon affichage des images */
+    margin-bottom: 10px;
+}
+
+.produit h2 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.produit .prix {
+    font-size: 16px;
+    color: red;
+    margin: 10px 0;
+}
+
+.produit p{
+    flex: 1; /* Remplit l'espace vertical si nécessaire */
+    font-size: 14px;
+    color: #666;
+}
+
+.produit .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+}
+
+.produit .btn:hover {
+    background-color: #0056b3;
+}
+
+.produit-details {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: #fff;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+footer {
+    background-color: #222;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+footer p {
+    margin: 0;
+}
+
+.panier ul {
+    list-style: none;
+    padding: 0;
+}
+
+.panier ul li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panier ul li h2 {
+    margin: 0;
+}
+
+.panier p {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Styles pour centrer l'image */
+.image-container {
+    display: flex; /* Utilisation de Flexbox */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    height: 500px; /* Hauteur fixe ou adaptée selon ton design */
+    margin: 0 auto; /* Centre le conteneur */
+}
+
+.image-container img {
+    max-width: 100%; /* Pour éviter le dépassement */
+    max-height: 100%; /* Ajuste à la hauteur du conteneur */
+    object-fit: contain; /* Garde les proportions */
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    margin: 10px 0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #555;
+}
+
+.commande-form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.commande-form input,
+.commande-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
