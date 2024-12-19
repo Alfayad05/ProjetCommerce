@@ -1,17 +1,7 @@
 <?php
 include 'includes/header.php';
 
-// Connexion à la base de données
-$dsn = 'mysql:host=localhost;dbname=site_chaussures;charset=utf8';
-$user = 'root';
-$password = '';
-
-try {
-    $pdo = new PDO($dsn, $user, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die('Erreur : ' . $e->getMessage());
-}
+require_once 'db.php'; // Fichier contenant la connexion à la base de données
 
 // Récupération des produits
 define('IMG_PATH', 'assets/images/chaussures/'); // Dossier contenant les images

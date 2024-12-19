@@ -1,17 +1,5 @@
 <?php
-// produit.php
-
-// Connexion à la base de données
-$dsn = 'mysql:host=localhost;dbname=site_chaussures;charset=utf8';
-$user = 'root';
-$password = '';
-
-try {
-    $pdo = new PDO($dsn, $user, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die('Erreur : ' . $e->getMessage());
-}
+require_once 'db.php'; // Fichier contenant la connexion à la base de données
 
 // Vérification de l'ID du produit
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -54,6 +42,10 @@ if (!$produit) {
         <h2><?= htmlspecialchars($produit['nom']) ?></h2>
         <p><?= htmlspecialchars($produit['description']) ?></p>
         <p class="prix">Prix : <?= htmlspecialchars($produit['prix']) ?> €</p>
+        <form action="favoris.php" method="POST">
+            <input type="hidden" name="id" value="<?= $produit['id'] ?>">
+            <button type="submit" class="btn">Mettre en favoris</button>
+        </form>
         <form action="panier.php" method="POST">
             <input type="hidden" name="id" value="<?= $produit['id'] ?>">
             <button type="submit" class="btn">Ajouter au panier</button>
