@@ -8,7 +8,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 define('IMG_PATH', 'assets/images/chaussures/'); // Dossier contenant les images
 $id = (int) $_GET['id'];
-$query = $pdo->prepare("SELECT * FROM produits WHERE id = :id");
+$query = $pdo->prepare("SELECT * FROM produits p Join adidas a on p.id = a.id WHERE id = :id");
 $query->execute(['id' => $id]);
 $produit = $query->fetch(PDO::FETCH_ASSOC);
 

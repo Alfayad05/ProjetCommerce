@@ -1,6 +1,4 @@
-<?php
-session_start();
-?>
+
 <header>
     <h1>Bienvenue sur notre boutique de chaussures</h1>
     <nav>
@@ -9,6 +7,7 @@ session_start();
         <a href="favoris.php">Favoris</a>
         <?php if (isset($_SESSION['utilisateur_id'])): ?>
             <a href="deconnexion.php">Déconnexion</a>
+            <a href="profil.php">Profil</a>
         <?php else: ?>
             <a href="connexion.php">Se Connecter</a>
         <?php endif; ?>
