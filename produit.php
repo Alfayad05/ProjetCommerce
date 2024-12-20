@@ -1,5 +1,8 @@
 <?php
+session_start();
 require_once 'db.php'; // Fichier contenant la connexion à la base de données
+include 'includes/header.php';
+
 
 // Vérification de l'ID du produit
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -8,7 +11,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 
 define('IMG_PATH', 'assets/images/chaussures/'); // Dossier contenant les images
 $id = (int) $_GET['id'];
-$query = $pdo->prepare("SELECT * FROM produits p Join adidas a on p.id = a.id WHERE id = :id");
+$query = $pdo->prepare("SELECT * FROM produits WHERE id = :id");
 $query->execute(['id' => $id]);
 $produit = $query->fetch(PDO::FETCH_ASSOC);
 
@@ -26,13 +29,6 @@ if (!$produit) {
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-<header>
-    <h1><?= htmlspecialchars($produit['nom']) ?></h1>
-    <nav>
-        <a href="index.php">Accueil</a>
-        <a href="panier.php">Panier</a>
-    </nav>
-</header>
 
 <main>
     <section class="produit-details">
@@ -42,10 +38,15 @@ if (!$produit) {
         <h2><?= htmlspecialchars($produit['nom']) ?></h2>
         <p><?= htmlspecialchars($produit['description']) ?></p>
         <p class="prix">Prix : <?= htmlspecialchars($produit['prix']) ?> €</p>
-        <form action="favoris.php" method="POST">
-            <input type="hidden" name="id" value="<?= $produit['id'] ?>">
-            <button type="submit" class="btn">Mettre en favoris</button>
-        </form>
+        <?php if (isset($_SESSION['utilisateur_id'])): ?>
+            <form action="ajouter_favori.php" method="post">
+                <input type="hidden" name="produit_id" value="<?= $produit['id'] ?>">
+                <button type="submit" class="btn-favori">Ajouter aux favoris</button>
+            </form>
+        <?php else: ?>
+            <p><a href="connexion.php">Connectez-vous</a> pour ajouter ce produit à vos favoris.</p>
+        <?php endif; ?>
+
         <form action="panier.php" method="POST">
             <input type="hidden" name="id" value="<?= $produit['id'] ?>">
             <button type="submit" class="btn">Ajouter au panier</button>

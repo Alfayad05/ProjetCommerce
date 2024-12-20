@@ -67,3 +67,11 @@ INSERT INTO `asics` (nom, description, prix, image) VALUES
                                                         ('Asics Fuji Lite 3', 'Chaussure de trail inspirée de la nature.', 129.99, 'fuji_lite_3.jpg'),
                                                         ('Asics Magic Speed 2', 'Conçue pour les entraînements de vitesse.', 149.99, 'magic_speed_2.jpg'),
                                                         ('Asics Hyper Speed', 'Un modèle simple et léger pour le running.', 99.99, 'hyper_speed.jpg');
+
+CREATE TABLE favoris (
+                         id INT AUTO_INCREMENT PRIMARY KEY,
+                         utilisateur_id INT NOT NULL,
+                         produit_id INT NOT NULL,
+                         FOREIGN KEY (utilisateur_id) REFERENCES utilisateurs(id) ON DELETE CASCADE,
+                         FOREIGN KEY (produit_id) REFERENCES produits(id) ON DELETE CASCADE
+);

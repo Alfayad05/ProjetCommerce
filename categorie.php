@@ -53,6 +53,7 @@ $produits = $query->fetchAll(PDO::FETCH_ASSOC);
                     <p class="prix">Prix : <?= htmlspecialchars($produit['prix']) ?> €</p>
                     <form action="panier.php" method="POST">
                         <input type="hidden" name="id" value="<?= $produit['id'] ?>">
+                        <a href="produit.php?id=<?= $produit['id'] ?>" class="btn">Voir le produit</a>
                         <button type="submit" class="btn">Ajouter au panier</button>
                     </form>
                 </article>

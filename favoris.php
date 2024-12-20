@@ -1,30 +1,26 @@
 <?php
-require_once 'db.php'; // Fichier contenant la connexion à la base de données
-
 session_start();
+require_once 'db.php'; // Connexion à la base de données
+define('IMG_PATH', 'assets/images/chaussures/'); // Dossier contenant les images
+include 'includes/header.php';
 
-// Initialisation du panier
-if (!isset($_SESSION['favoris'])) {
-    $_SESSION['favoris'] = [];
+
+// Vérifie si l'utilisateur est connecté
+if (!isset($_SESSION['utilisateur_id'])) {
+    header("Location: connexion.php");
+    exit();
 }
 
-// Gestion des ajouts au panier
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id = (int) $_POST['id'];
-    if (!in_array($id, $_SESSION['favoris'])) {
-        $_SESSION['favoris'][] = $id;
-    }
-    header('Location: favoris.php');
-    exit;
-}
-
-// Récupération des produits dans le panier
-$produits = [];
-if (!empty($_SESSION['favoris'])) {
-    $ids = implode(',', array_map('intval', $_SESSION['favoris']));
-    $query = $pdo->query("SELECT * FROM produits WHERE id IN ($ids)");
-    $produits = $query->fetchAll(PDO::FETCH_ASSOC);
-}
+// Récupère les favoris de l'utilisateur
+$utilisateur_id = $_SESSION['utilisateur_id'];
+$query = $pdo->prepare("
+    SELECT p.id, p.nom, p.description, p.prix, p.image
+    FROM favoris f
+    JOIN produits p ON f.produit_id = p.id
+    WHERE f.utilisateur_id = :utilisateur_id
+");
+$query->execute(['utilisateur_id' => $utilisateur_id]);
+$favoris = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -32,38 +28,28 @@ if (!empty($_SESSION['favoris'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vos produits favoris</title>
+    <title>Mes Favoris</title>
     <link rel="stylesheet" href="assets/css/styles.css">
+
 </head>
 <body>
-<header>
-    <h1>Vos produits favoris</h1>
-    <nav>
-        <a href="index.php">Accueil</a>
-    </nav>
-</header>
-
-<main>
-    <section class="panier">
-        <?php if (empty($produits)): ?>
-            <p>Aucun article favoris.</p>
-        <?php else: ?>
-            <ul>
-                <?php foreach ($produits as $produit): ?>
-                    <li>
-                        <h2><?= htmlspecialchars($produit['nom']) ?></h2>
-                        <p>Prix : <?= htmlspecialchars($produit['prix']) ?> €</p>
-                        <div class="image-container">
-                            <img src="<?= IMG_PATH . htmlspecialchars($produit['image']) ?>" alt="Chaussure">
-                        </div>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
-    </section>
-
-</main>
-
+<h1>Vos Favoris</h1>
+<?php if (empty($favoris)): ?>
+    <p>Vous n'avez aucun favori pour le moment.</p>
+<?php else: ?>
+    <ul>
+        <?php foreach ($favoris as $produit): ?>
+        <section class="produit-details">
+            <div class="image-container">
+                <img src="<?= IMG_PATH . htmlspecialchars($produit['image']) ?>" alt="Chaussure">
+            </div>
+            <h2><?= htmlspecialchars($produit['nom']) ?></h2>
+            <p><?= htmlspecialchars($produit['description']) ?></p>
+            <p class="prix">Prix : <?= htmlspecialchars($produit['prix']) ?> €</p>
+        </section>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
+<a href="index.php">Retour à l'accueil</a>
 </body>
 </html>
-<?php include 'includes/footer.php'; ?>
